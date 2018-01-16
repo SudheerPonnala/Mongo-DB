@@ -200,5 +200,33 @@ Aggregate
 	{ "_id" : 45, "maxage" : 80000 }
 	{ "_id" : 25, "maxage" : 22222 }
 
+Back up
+-------
+All Databases
+-------------
+37. in bin folder terminal
+	mongodump
+	this will create backup for all databases, creates dump folder in bin folder
+	go to mongo shell and remove all databases 
+	mongoretore
+	go to mongo shell and show dbs
 
+Specific Database
+-----------------
+38. in bin folder terminal
+	mongodump --db databasename
+	this will create backup for mentioned database, creates dump folder in bin folder
+	go to mongo shell and remove that database 
+	mongoretore --db databasename dump/databasename
+	go to mongo shell and show dbs 	
+
+Specific Collection
+-------------------
+38. in bin folder terminal
+	mongodump --db databasename --collection collectionname
+	this will create backup for mentioned collection, creates dump folder in bin folder
+	go to mongo shell and remove that collection 
+	mongoretore --db databasename --collection collectionname dump/databasename/collectionname.bson
+	go to mongo shell and show collections 	
+	
 
