@@ -1,0 +1,204 @@
+[{
+	"_id" : ObjectId("5a5afeeaed54265917be2775"),
+	"name" : "sudheer",
+	"age" : 25,
+	"salary" : 20000
+},
+{
+	"_id" : ObjectId("5a5b0016ed54265917be2776"),
+	"name" : "dileep",
+	"age" : 35,
+	"salary" : 50000
+},
+{
+	"_id" : ObjectId("5a5b0016ed54265917be2777"),
+	"name" : "murali",
+	"age" : 45,
+	"salary" : 80000
+},
+{
+	"_id" : ObjectId("5a5b0016ed54265917be2778"),
+	"name" : "nagaraj",
+	"age" : 56,
+	"salary" : 150000
+},
+{
+	"_id" : ObjectId("5a5b0016ed54265917be2779"),
+	"name" : "irfan",
+	"age" : 20,
+	"salary" : 30000
+},
+{
+	"_id" : ObjectId("5a5b0016ed54265917be277a"),
+	"name" : "zia",
+	"age" : 10,
+	"salary" : 5000
+}]
+
+
+Creating, deleting database and collection
+------------------------------------------
+1. show dbs
+	Display all list of databases
+
+2. use batabasename
+	Creates database and switch to that  
+
+3. show collections
+	Display all list of collections in actice database
+	atleast one record should be inserted to display the collection in list
+
+4. db
+	shows active db name
+
+5. db.collectionname.insert([{"name":"hello","age":34,"salary":39000}])
+	if collection already exist inserts the document
+	else creates the collection and inserts the document in to that created collection 
+
+6. db.createCollection("collectionname")
+	create the collection 	
+
+7. db.dropDatabase()
+	to delete the currently active 
+
+8. db.collectionname.drop()
+	to delete the specified collection from the current database
+
+9. use testdb
+
+10. db.createCollection("employee")
+11. db.employee.insert(Array)
+
+Retrieving
+----------
+13. db.employee.find()
+	to retrieve all documents from the employee collection
+
+13. db.employee.find().pretty()
+	display documents in structured way
+
+14. db.employee.findOne()
+	retrieve the top one documenyy only
+
+15. db.employee.find({
+		"age": 30				
+	})
+	retrieve the documents with the age is 30
+
+AND
+---
+16. db.employee.find({
+		"age": 30,
+		"salary": {$lt: 50000}				
+	})
+	retrieve documents with age 30 AND salary lesstan 50000
+
+17. db.employee.find({
+		"age": 30,
+		"salary": {$lte: 50000}				
+	})
+	retrieve documents with age 30 AND salary lessthan or equal to 50000
+
+18. db.employee.find({
+		"age": 30,
+		"salary": {$gt: 50000}				
+	})
+	retrieve documents with age 30 AND salary greater than 50000
+
+19. db.employee.find({
+		"age": 30,
+		"salary": {$gte: 50000}				
+	})
+	retrieve documents with age 30 AND salary greater than or eqaul to 50000
+
+20. db.employee.find({
+		"salary": {$ne: 50000 }
+	})
+	retrieve documents with salary not equal to 50000
+OR
+--
+20. db.employee.find({
+		$or: [{
+			"name":"sudheer"
+		       },
+		      {
+			"name":"murali"
+			}
+		     ]		 
+	})
+
+	retrieve documents with name is sudheer OR murali
+ 
+Update
+------
+22. db.employee.update({"name":"sudheer"},{$set: {"salary":"90000}})
+	find the document by name sudheer and update the salary of that employee to 90000
+
+23. db.employee.update({"age":25},{$set:{"salary":22222}},{multi:true})
+	find the document by age 25 and update the salary to 22222
+	if there are one or more documents then to update that all records we have to set multi: true
+	multi: false then updates only top one document
+
+Remove documents
+----------------
+24. db.employee.remove({"name":"sudheer"})
+	removes the all documents by name sudheer
+
+25. db.employee.remove({"name":"sudheer"},1)
+	removes the only one document from the all matched documents with name sudheer
+
+Selecting fields
+----------------
+26. db.employee.find({},{"name":1, "age": 0, "_id": 0}).pretty()
+	first object parameter is select query criteria
+	second object parameter is select field criteria, 
+		if field name set to 1 means that is true and field will exist in result
+		if field name set to 0 means that is false and field will not exist in result
+
+Limit, skip and Sort
+--------------------
+27. db.employee.find({},{"name":1, "_id": 0}).pretty().limit(3)
+	limit(3) means it will display the top 3 documents only with name sudheer
+
+28. db.employee.find({},{"name":1, "_id": 0}).pretty().skip(2)
+	skip(2) means it will display the docs by skipping the top 2docs
+
+29. db.employee.find({},{"name":1, "_id": 0}).pretty().skip(2).limit(3) 
+	it skips the first 2 docs and display the next 3 documents
+
+30. db.employee.find({},{"name":1, "_id": 0}).pretty().sort({"name": 1})
+	if it is 1 sorts the docs by name in acsending order
+	if it is -1 sorts the docs by name in descending order
+
+Indexes
+-------
+	by default mongo db creates the Index for "_id"
+
+31. db.employee.ensureIndex({"name": 1})
+	here we are creating index for "name"
+
+32. db.employee.getIndexes()
+	displays the all available indexes on a collection
+
+33. db.employee.dropIndex({"name": 1})
+	used to remove the mentioned index from the collection
+
+Aggregate
+---------
+34. db.employee.aggregate([{$group: {_id: "$age", total: {$sum:1}}}])
+	{ "_id" : 10, "total" : 1 }
+	{ "_id" : 45, "total" : 1 }
+	{ "_id" : 25, "total" : 2 }
+
+35. db.employee.aggregate([{$group: {_id: "$age", maxage: {$max:"$salary"}}}])
+	{ "_id" : 10, "maxage" : 5000 }
+	{ "_id" : 45, "maxage" : 80000 }
+	{ "_id" : 25, "maxage" : 40000 }
+
+36. db.employee.aggregate([{$group: {_id: "$age", maxage: {$min:"$salary"}}}])
+	{ "_id" : 10, "maxage" : 5000 }
+	{ "_id" : 45, "maxage" : 80000 }
+	{ "_id" : 25, "maxage" : 22222 }
+
+
+
