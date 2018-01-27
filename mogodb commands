@@ -1,3 +1,18 @@
+To know the currently installed verion of MongoDB
+-------------------------------------------------
+1. through CMD line
+-------------------
+	mondod --version
+
+2. through Mongo Shell
+----------------------
+	db.version()
+
+Update Version in Linux
+-----------------------
+	http://blog.mdsohelrana.com/2016/12/11/update-mongodb-to-3-2-from-2-4-in-ubuntu-14-04/
+
+
 [{
 	"_id" : ObjectId("5a5afeeaed54265917be2775"),
 	"name" : "sudheer",
