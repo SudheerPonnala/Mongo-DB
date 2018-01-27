@@ -12,6 +12,12 @@ Update Version in Linux
 -----------------------
 	http://blog.mdsohelrana.com/2016/12/11/update-mongodb-to-3-2-from-2-4-in-ubuntu-14-04/
 
+Interract with mongodb:
+-----------------------
+	1. mongoclient
+	2. mongoose
+	3. mongojs
+
 
 [{
 	"_id" : ObjectId("5a5afeeaed54265917be2775"),
